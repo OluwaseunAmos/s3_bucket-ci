@@ -1,9 +1,9 @@
-name: Node.js CI Automation
+name: Node.js Continous Integration
 
 # Trigger the workflow on pushes or pull requests to the main branch
 on:
   push:
-    branches: [ main ]
+    branches: [ main, ci-setup ]
   pull_request:
     branches: [ main ]
 
