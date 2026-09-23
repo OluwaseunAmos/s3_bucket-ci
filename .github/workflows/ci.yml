@@ -1,0 +1,34 @@
+name: Node.js CI Automation
+
+# Trigger the workflow on pushes or pull requests to the main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    # Run the automation on a clean, cloud-hosted Ubuntu environment
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out your repository code so the runner can access it
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    # Step 2: Set up the specific Node.js version environment
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-node-version: '20' # Matches a modern LTS Node version
+        cache: 'npm'           # Caches dependencies to speed up future builds
+
+    # Step 3: Install project dependencies (clean installation)
+    - name: Install Dependencies
+      run: npm ci
+
+    # Step 4: Verify the application syntax / compilation (Optional)
+    # This runs a check to ensure no basic syntax breaking errors exist
+    - name: Validate App Script Syntax
+      run: node --check server.js
